@@ -1,12 +1,20 @@
 const express = require('express')
 const app = express()
-const mongoose = require('mongoose')
+//const mongoose = require('mongoose')
+const { Pool } = require('pg');
 
 
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('connected to database'))
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
+const client = pool.connect();
+
+
+client.on('error', (error) => console.error(error))
+client.once('open', () => console.log('connected to database'))
 
 
 app.use(express.json())
