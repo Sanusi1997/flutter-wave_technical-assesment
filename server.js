@@ -10,12 +10,9 @@ const pool = new Pool({
     rejectUnauthorized: false
   }
 });
-const client = pool.connect();
 
-
-client.on('error', (error) => console.error(error))
-client.once('open', () => console.log('connected to database'))
-
+pool.connect().then(() => console.log("connected to database"))
+.catch((err) => console.error(err));
 
 app.use(express.json())
 
