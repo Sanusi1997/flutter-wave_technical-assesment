@@ -1,5 +1,5 @@
 const express = require('express')
-const { base } = require('../models/rule')
+const { base } =           require('../models/rule')
 const router = express.Router()
 const Rule = require('../models/rule')
 const Data = require('../models/data')
