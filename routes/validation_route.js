@@ -37,7 +37,7 @@ router.post('/validate-rule', async (req, res) => {
 
       }
     });
-    rule.toJSON()
+
   const data = new Data
     ({
       data: {
@@ -48,7 +48,6 @@ router.post('/validate-rule', async (req, res) => {
         missions: req.body.data.missions
       }
     });
-    data.toJSON()
 
   try {
     const ruleInstance = await rule.save()
@@ -64,24 +63,24 @@ router.post('/validate-rule', async (req, res) => {
         }
       });
 
-    if (rule["rule"]["condition"] === "eq" && Number(data["data"]["missions"]) ===
-      Number(validation["validation"]["condition_value"])) {
+    if (rule['rule']['condition'] === "eq" && Number(data['data']['missions']) ===
+      Number(validation['validation"]["condition_value'])) {
       const validationInstance = await validation.save()
       res.status(201).send(jsend.success(validationInstance))
-    } else if (rule["rule"]["condition"] === "neq" && Number(data["data"]["missions"]) !==
-      Number(rule["rule"]["condition_value"])) {
+    } else if (rule['rule']['condition'] === "neq" && Number(data['data']['missions']) !==
+      Number(rule['rule']['condition_value'])) {
       const validationInstance = await validation.save()
       res.status(201).send(jsend.success(validationInstance))
-    } else if (rule["rule"]["condition"] === "gt" && Number(data["data"]["missions"]) >
-      Number(rule["rule"]["condition_value"])) {
+    } else if (rule['rule']['condition'] === "gt" && Number(data(['data']['missions']) >
+      Number(rule['rule']['condition_value']))) {
       const validationInstance = await validation.save()
       res.status(201).send(jsend.success(validationInstance))
-    } else if (rule["rule"]["condition"] == "gte" && Number(data["data"]["missions"]) >=
-      Number(rule["rule"]["condition_value"])) {
+    } else if (rule['rule']['condition'] == "gte" && Number(data['data']['missions']) >=
+      Number(rule['rule']['condition_value'])) {
       const validationInstance = await validation.save()
       res.status(201).send(jsend.success(validationInstance))
     } else {
-      validation["validation"]["error"] = true
+      validation['validation']['error'] = true
       const validationInstance = await validation.save()
       res.status(400).send(jsend.error({
         message: `field ${rule["rule"]["field"]} failed validation`,
@@ -89,24 +88,30 @@ router.post('/validate-rule', async (req, res) => {
       }))
     }
   } catch (err) {
-  
-    if (data["data"]["crew"] === undefined  && data["data"]["name"] === undefined 
-          && data["data"]["age"] === undefined  &&  data["data"]["position"] === undefined
-          && data["data"]["missions"] === undefined   ) {
+    
+
+    if (data['data']['crew'] === undefined  && data["data"]["name"] === undefined 
+          && data['data']['age'] === undefined  &&  data['data']['position'] === undefined
+          && data['data']['missions'] === undefined   ) {
       const failedValue = null
       res.status(400).send(jsend.error({
         data: failedValue,
         message: "data field is required"
 
       }))
-    } else if (rule["rule"]["field"] === undefined  &&  rule["rule"]["conditon"] === undefined 
-    && rule["rule"]["condition"]) {
+    } else if (rule['rule']['field'] === undefined  &&  rule['rule']['conditon'] === undefined 
+    && rule['rule']['condition']) {
       const failedValue = null
       res.status(400).send(jsend.error({
         data: failedValue,
         message: "rule field is required"
       }))
-    
+    }else{
+      const failedValue = null
+      res.status(400).send(jsend.error({
+        data: failedValue,
+        message: "Invalid JSON payload passed"
+      }))
 
     } 
 

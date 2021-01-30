@@ -2,7 +2,7 @@
 GET http://localhost:3000/
 
 ###
-POST https://hameed-flw-solution.herokuapp.com/validate-rule
+POST http://localhost:3000/validate-rule
 Content-Type: application/json
 
 

@@ -15,5 +15,6 @@ const validationRouter =   require('./routes/validation_route')
 
 const port = process.env.PORT || 3000
 app.use('/', validationRouter)
+app.use('/validate-rule', validationRouter)
 
 app.listen(port, () => console.log('server started'))
