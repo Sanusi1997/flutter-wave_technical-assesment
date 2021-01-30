@@ -1,5 +1,5 @@
 const express = require('express')
-const { base } =           require('../models/rule')
+const { base } =  require('../models/rule')
 const router = express.Router()
 const Rule = require('../models/rule')
 const Data = require('../models/data')
@@ -37,7 +37,7 @@ router.post('/validate-rule', async (req, res) => {
 
       }
     });
-
+    rule.toJSON()
   const data = new Data
     ({
       data: {
@@ -48,6 +48,7 @@ router.post('/validate-rule', async (req, res) => {
         missions: req.body.data.missions
       }
     });
+    data.toJSON()
 
   try {
     const ruleInstance = await rule.save()
@@ -88,8 +89,7 @@ router.post('/validate-rule', async (req, res) => {
       }))
     }
   } catch (err) {
-    console.log(data.data)
-
+  
     if (data["data"]["crew"] === undefined  && data["data"]["name"] === undefined 
           && data["data"]["age"] === undefined  &&  data["data"]["position"] === undefined
           && data["data"]["missions"] === undefined   ) {
@@ -106,12 +106,7 @@ router.post('/validate-rule', async (req, res) => {
         data: failedValue,
         message: "rule field is required"
       }))
-    }else{
-      const failedValue = null
-      res.status(400).send(jsend.error({
-        data: failedValue,
-        message: "Invalid JSON payload passed"
-      }))
+    
 
     } 
 
